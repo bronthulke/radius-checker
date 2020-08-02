@@ -30,7 +30,7 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
     }),
-    new dotenv()
+    // new dotenv()   <!-- add this for hiding secrets in a .env file
   ],
   devServer: {
     port: 8085,

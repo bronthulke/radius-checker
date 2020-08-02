@@ -1,7 +1,7 @@
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.css'
-import MapLib from './map'
+import MapLib from './maplib'
 
 // console.log("API key" + process.env.GOOGLE_API_KEY);
 
