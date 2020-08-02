@@ -40,6 +40,7 @@ module.exports = {
   ],
   devServer: {
     port: 8085,
+    contentBase: __dirname + '/dist',
   },
 
 };
