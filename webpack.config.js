@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
-const dotenv = require('dotenv-webpack');
+const CopyPlugin = require("copy-webpack-plugin");
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: __dirname + '/src/index.js',
@@ -30,7 +31,12 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
     }),
-    // new dotenv()   <!-- add this for hiding secrets in a .env file
+    new CopyPlugin({
+      patterns: [
+        { from: 'index.html', to: '.' },
+      ],
+    }),
+    // new Dotenv()   <!-- add this for hiding secrets in a .env file
   ],
   devServer: {
     port: 8085,
