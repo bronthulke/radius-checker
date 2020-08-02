@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radius Checker</title>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Quick and dirty radius checker tool!</h2>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <label class="control-label">Enter your address</label>
+                <input type="text" id="SearchAddress" class="form-control" />
+            </div>
+            <div class="col-xs-12">
+                <div id="map"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <p>Created by Bron Thulke - Angel Web Designs - code avaialble at </p>
+        </div>
+    </div>
+
+    <script src='dist/main.js'></script>
+
+    <!-- <script type="text/javascript" src='jquery.geocomplete.min.js'></script> -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh8bjuir6KMF_FCVovyjQeOKaMGfLeYJA&callback=initMap&libraries=places&v=weekly"
+      defer
+    ></script>
+
+</body>
+</html>
