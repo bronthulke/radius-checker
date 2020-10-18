@@ -32,11 +32,11 @@ export default class MapLib {
 
                 this.points.push(point);
 
-                drawPointsAndRadii();
+                this.drawPointsAndRadii();
             });
 
         $("#ddlRadius").on("change", function() {
-            drawPointsAndRadii();
+            this.drawPointsAndRadii();
         });
     }
 
