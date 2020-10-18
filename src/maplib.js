@@ -8,6 +8,8 @@ export default class MapLib {
         this.resultRadiusCircle = null;
         this.resultMarker = null;
 
+        this.points = [];
+
         this.map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: -37.8136, lng: 144.9631 },
             zoom: 8,
@@ -19,27 +21,42 @@ export default class MapLib {
             })
             .bind("geocode:result", (event, result) => {
                 // clear the old radius
-                const clearCheck = document.getElementById("chkClearPrevious");
-                if(clearCheck.checked)
-                    this.clearPrevious();
+                if(document.getElementById("chkClearPreviousPoints").checked)
+                    this.points = [];
+
 
                 let point = new google.maps.LatLng(
                     result.geometry.location.lat(),
                     result.geometry.location.lng()
                 );
 
-                this.resultMarker = new google.maps.Marker({
-                    map: this.map,
-                    title: "Home",
-                    position: point,
-                    icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
-                });
+                this.points.push(point);
 
-                this.focusMarker(point);
-                this.drawSearchRadiusCircle(point);
+                drawPointsAndRadii();
             });
+
+        $("#ddlRadius").on("change", function() {
+            drawPointsAndRadii();
+        });
     }
 
+    drawPointsAndRadii() {
+        this.clearPreviousRadius(); // clear all radii so we can redraw them at the specified radius
+
+        this.points.forEach(point => {
+
+            this.resultMarker = new google.maps.Marker({
+                map: this.map,
+                title: "Home",
+                position: point,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+            });
+
+            this.focusMarker(point);
+            this.drawSearchRadiusCircle(point);
+        })
+    }
+    
     focusMarker(point) {
         this.map.setCenter(point);
         this.map.setZoom(13);
