@@ -62,7 +62,7 @@ export default class MapLib {
         this.map.setZoom(13);
     }
 
-    clearPrevious() {
+    clearPreviousRadius() {
         if(this.resultRadiusCircle)
             this.resultRadiusCircle.setMap(null);
 
