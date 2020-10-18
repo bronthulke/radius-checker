@@ -18,9 +18,11 @@ export default class MapLib {
                 country: 'AU'
             })
             .bind("geocode:result", (event, result) => {
-                this.clearPrevious();
-
                 // clear the old radius
+                const clearCheck = document.getElementById("chkClearPrevious");
+                if(clearCheck.checked)
+                    this.clearPrevious();
+
                 let point = new google.maps.LatLng(
                     result.geometry.location.lat(),
                     result.geometry.location.lng()
