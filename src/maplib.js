@@ -3,11 +3,8 @@ import "./jquery.geocomplete.min.js";
 
 export default class MapLib {
     constructor() {
-        this.radius = 25000; // eventually this can be a parameter
-        
-        this.resultRadiusCircle = null;
-        this.resultMarker = null;
-
+        this.resultRadiusCircles = [];
+        this.resultMarkers = [];
         this.points = [];
 
         this.map = new google.maps.Map(document.getElementById("map"), {
@@ -35,7 +32,7 @@ export default class MapLib {
                 this.drawPointsAndRadii();
             });
 
-        $("#ddlRadius").on("change", function() {
+        $("#ddlRadius").on("change", () => {
             this.drawPointsAndRadii();
         });
     }
@@ -45,12 +42,12 @@ export default class MapLib {
 
         this.points.forEach(point => {
 
-            this.resultMarker = new google.maps.Marker({
+            this.resultMarkers.push(new google.maps.Marker({
                 map: this.map,
                 title: "Home",
                 position: point,
                 icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
-            });
+            }));
 
             this.focusMarker(point);
             this.drawSearchRadiusCircle(point);
@@ -63,11 +60,15 @@ export default class MapLib {
     }
 
     clearPreviousRadius() {
-        if(this.resultRadiusCircle)
-            this.resultRadiusCircle.setMap(null);
+        if(this.resultRadiusCircles.length > 0) {
+            this.resultRadiusCircles.forEach(c => c.setMap(null));
+            this.resultRadiusCircles = [];
+        }
 
-        if(this.resultMarker)
-            this.resultMarker.setMap(null);
+        if(this.resultMarkers.length > 0) {
+            this.resultMarkers.forEach(m => m.setMap(null));
+            this.resultMarkers = [];
+        }
     }
 
     drawSearchRadiusCircle(point) {
@@ -83,6 +84,6 @@ export default class MapLib {
             zInd: -1,
             radius: parseInt(document.getElementById("ddlRadius").value),
         };
-        this.resultRadiusCircle = new google.maps.Circle(circleOptions);
+        this.resultRadiusCircles.push(new google.maps.Circle(circleOptions));
     }
 }
