@@ -3,7 +3,7 @@ import "./jquery.geocomplete.min.js";
 
 export default class MapLib {
     constructor() {
-        this.radius = 5000; // eventually this can be a parameter
+        this.radius = 25000; // eventually this can be a parameter
         
         this.resultRadiusCircle = null;
         this.resultMarker = null;
