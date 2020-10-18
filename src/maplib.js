@@ -64,7 +64,7 @@ export default class MapLib {
             center: point,
             clickable: false,
             zInd: -1,
-            radius: parseInt(this.radius),
+            radius: parseInt(document.getElementById("ddlRadius").value),
         };
         this.resultRadiusCircle = new google.maps.Circle(circleOptions);
     }
