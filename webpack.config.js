@@ -34,6 +34,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: 'index.html', to: '.' },
+        { from: 'radius-checker.png', to: '.' },
       ],
     }),
     // new Dotenv()   <!-- add this for hiding secrets in a .env file
