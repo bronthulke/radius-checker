@@ -1,5 +1,6 @@
 {
   "mimeTypes": {
+    ".json": "application/json",
     ".ttf": "application/octet-stream",
     ".woff": "font/x-woff",
     ".woff2": "application/font-woff2"
