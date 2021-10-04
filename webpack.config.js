@@ -36,6 +36,7 @@ module.exports = {
         { from: 'index.html', to: '.' },
         { from: 'radius-checker.png', to: '.' },
         { from: 'staticwebapp.config.json', to: '.' },
+        { from: 'test.json', to: '.' },
       ],
     }),
     // new Dotenv()   <!-- add this for hiding secrets in a .env file
