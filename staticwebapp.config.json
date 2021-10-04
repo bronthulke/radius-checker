@@ -1,0 +1,7 @@
+{
+  "mimeTypes": {
+    ".ttf": "application/octet-stream",
+    ".woff": "font/x-woff",
+    ".woff2": "application/font-woff2"
+  }
+}
