@@ -7,7 +7,7 @@ module.exports = {
   entry: __dirname + '/src/index.js',
   output: {
     path: __dirname + '/dist',
-    publicPath: '/dist/',
+    publicPath: '/',
     filename: 'main.js'
   },
   module: {
@@ -35,6 +35,7 @@ module.exports = {
       patterns: [
         { from: 'index.html', to: '.' },
         { from: 'radius-checker.png', to: '.' },
+        { from: 'assets', to: './assets' },
       ],
     }),
     // new Dotenv()   <!-- add this for hiding secrets in a .env file

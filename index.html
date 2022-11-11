@@ -32,16 +32,25 @@
             <div class="col-xs-12 col-sm-6 col-md-2">
                 <label class="control-label">Radius</label>
                 <select id="ddlRadius" class="form-control">
-                    <option value="5000" selected="">5km</option>
+                    <option value="5000">5km</option>
                     <option value="10000">10km</option>
+                    <option value="15000" selected="">15km</option>
                     <option value="20000">20km</option>
                     <option value="25000">25km</option>
                 </select>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4">
+                <label class="control-label">&nbsp;</label>
                 <br />
-                <input type="checkbox" class="form-check-input" id="chkClearPreviousPoints" checked>
-                <label class="form-check-label" for="chkClearPreviousPoints">Clear existing markers</label>
+                <input type="button" class="btn btn-primary" id="btnAddToMap" value="Add to map" />
+                &nbsp;&nbsp;<input type="button" class="btn btn-danger" id="btnClearMap" value="Clear map" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 form-group">
+                <a href="javascript:;" class="btn btn-success hidden" id="btnSetAsFavourite">Set last point as favourite</a>
+                <a href="javascript:;" class="btn btn-warning hidden" id="btnLoadFavourite"><img src="assets/star.svg" height="18" />&nbsp; Load favourite</a>
+                <a href="javascript:;" class="btn btn-default hidden" id="btnClearFavourite">Clear favourite</a>
             </div>
         </div>
         <div class="row">
@@ -59,7 +68,7 @@
 
     <!-- <script type="text/javascript" src='jquery.geocomplete.min.js'></script> -->
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh8bjuir6KMF_FCVovyjQeOKaMGfLeYJA&callback=initMap&libraries=places&v=weekly"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_jxChp9o2T6rSi26v2DgxBhYgTRPRGXo&callback=initMap&libraries=places&v=weekly"
       defer
     ></script>
 
