@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --mode=development --config webpack.config.js",
     "watch": "webpack --watch",
-    "build": "webpack --mode=production -p --config webpack.config.js"
+    "build": "webpack --mode=production --config webpack.config.js"
   },
   "author": "Bron Thulke",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "@babel/core": "^7.11.0",
     "@babel/preset-env": "^7.11.0",
     "css-loader": "^7.1.2",
-    "dotenv-webpack": "^2.0.0",
+    "dotenv-webpack": "^8.1.0",
     "file-loader": "^6.0.0",
     "style-loader": "^1.2.1",
     "webpack": "^5.92.1",
