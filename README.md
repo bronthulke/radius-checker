@@ -1,3 +1,5 @@
+[![Azure Static Web Apps CI/CD](https://github.com/bronthulke/radius-checker/actions/workflows/azure-static-web-apps-polite-mud-014f9e91e.yml/badge.svg)](https://github.com/bronthulke/radius-checker/actions/workflows/azure-static-web-apps-polite-mud-014f9e91e.yml)
+
 # Google Maps Radius Checker
 A simple tool, utilising the Google Maps API, to check where your 5km radius extends to for Stage 4 lockdowns.
 
