@@ -3,7 +3,10 @@ const webpack = require("webpack");
 const CopyPlugin = require("copy-webpack-plugin");
 const DotenvWebpack = require('dotenv-webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const dotenv = require('dotenv').config(); 
+
+if (process.env.NODE_ENV !== 'production') {
+  const dotenv = require('dotenv').config(); 
+}
 
 const googleAPIKey = process.env.GOOGLE_API_KEY;
 console.log("API Key in webpack config: " + googleAPIKey);
