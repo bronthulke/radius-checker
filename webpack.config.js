@@ -1,7 +1,11 @@
 const path = require("path");
 const webpack = require("webpack");
 const CopyPlugin = require("copy-webpack-plugin");
-const Dotenv = require('dotenv-webpack');
+const DotenvWebpack = require('dotenv-webpack');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const dotenv = require('dotenv').config(); 
+
+const googleAPIKey = process.env.GOOGLE_API_KEY;
 
 module.exports = {
   entry: __dirname + '/src/index.js',
@@ -33,16 +37,22 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: 'index.html', to: '.' },
+        // { from: 'index.html', to: '.' },
         { from: 'radius-checker.png', to: '.' },
         { from: 'assets', to: './assets' },
       ],
     }),
-    // new Dotenv()   <!-- add this for hiding secrets in a .env file
+    new DotenvWebpack(),
+    new HtmlWebpackPlugin({
+      inject: false,
+      template: path.join(__dirname, 'src', 'views', 'index.html'), // 'src/views/index.html',
+      apiUrl: `https://maps.googleapis.com/maps/api/js?key=${googleAPIKey}&callback=initMap&libraries=places&v=weekly`
+    }),
   ],
   devServer: {
     port: 8085,
-    contentBase: path.join(__dirname, 'dist')
+    static: {
+      directory: path.join(__dirname, 'dist')
+    }
   },
-
 };
