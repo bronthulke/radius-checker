@@ -41,7 +41,6 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: 'staticwebapp.config.json', to: '.' },
         { from: 'radius-checker.png', to: '.' },
         { from: 'assets', to: './assets' },
       ],

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Simple tool for determining a radius from your home",
   "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev": "webpack-dev-server --mode=development --config webpack.config.js",
     "watch": "webpack --watch",
