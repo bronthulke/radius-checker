@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const dotenv = require('dotenv').config(); 
 
 const googleAPIKey = process.env.GOOGLE_API_KEY;
+console.log("API Key in webpack config: " + googleAPIKey);
 
 module.exports = {
   entry: __dirname + '/src/index.js',
