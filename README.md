@@ -7,3 +7,6 @@ A simple tool, utilising the Google Maps API, to check where your 5km radius ext
 * `npm start` to run eslint on watch mode and dev-server at localhost:8085.
 * `npm run watch` to only watch for/recompile on changes.
 * `npm run build` to generate a minified, production-ready build.
+
+## New Feature: Filter Businesses Inside Radius
+This tool now includes a feature to filter and display businesses (such as grocery stores and restaurants) within the specified radius. The businesses are fetched using the Google Places API and displayed on the map with blue markers.
