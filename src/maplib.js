@@ -7,7 +7,7 @@ export default class MapLib {
         this.resultMarkers = [];
         this.points = [];
         this.currentPoint = undefined;
-        this.showBusinesses = true; // Pcf88
+        this.showBusinesses = true;
 
         this.map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: -37.8136, lng: 144.9631 },
@@ -63,7 +63,6 @@ export default class MapLib {
             this.updateFavouritesButtons();
         });
 
-        // Pcf88
         $("#toggleBusinesses").on("change", (event) => {
             this.showBusinesses = event.target.checked;
             this.drawPointsAndRadii();
@@ -98,7 +97,7 @@ export default class MapLib {
 
             this.focusMarker(point);
             this.drawSearchRadiusCircle(point);
-            if (this.showBusinesses) { // Pcf88
+            if (this.showBusinesses) {
                 this.fetchBusinesses(point);
             }
         })
@@ -156,7 +155,6 @@ export default class MapLib {
                         icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
                     });
 
-                    // P5285
                     const infoWindow = new google.maps.InfoWindow({
                         content: `<div><strong>${business.name}</strong><br>${business.vicinity}</div>`
                     });
