@@ -8,6 +8,7 @@ export default class MapLib {
         this.points = [];
         this.currentPoint = undefined;
         this.showBusinesses = true;
+        this.businessMarkers = [];
 
         this.map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: -37.8136, lng: 144.9631 },
@@ -118,6 +119,11 @@ export default class MapLib {
             this.resultMarkers.forEach(m => m.setMap(null));
             this.resultMarkers = [];
         }
+
+        if(this.businessMarkers.length > 0) {
+            this.businessMarkers.forEach(m => m.setMap(null));
+            this.businessMarkers = [];
+        }
     }
 
     drawSearchRadiusCircle(point) {
@@ -162,6 +168,8 @@ export default class MapLib {
                     marker.addListener('click', () => {
                         infoWindow.open(this.map, marker);
                     });
+
+                    this.businessMarkers.push(marker);
                 });
             }
         });
