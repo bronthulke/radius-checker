@@ -7,6 +7,7 @@ export default class MapLib {
         this.resultMarkers = [];
         this.points = [];
         this.currentPoint = undefined;
+        this.showBusinesses = true; // Pcf88
 
         this.map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: -37.8136, lng: 144.9631 },
@@ -61,6 +62,12 @@ export default class MapLib {
             localStorage.removeItem('favouritepoint');
             this.updateFavouritesButtons();
         });
+
+        // Pcf88
+        $("#toggleBusinesses").on("change", (event) => {
+            this.showBusinesses = event.target.checked;
+            this.drawPointsAndRadii();
+        });
     }
 
     addCurrentPointToMap() {
@@ -91,7 +98,9 @@ export default class MapLib {
 
             this.focusMarker(point);
             this.drawSearchRadiusCircle(point);
-            this.fetchBusinesses(point);
+            if (this.showBusinesses) { // Pcf88
+                this.fetchBusinesses(point);
+            }
         })
     }
     
@@ -140,11 +149,20 @@ export default class MapLib {
         service.nearbySearch(request, (results, status) => {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 results.forEach(business => {
-                    new google.maps.Marker({
+                    const marker = new google.maps.Marker({
                         map: this.map,
                         title: business.name,
                         position: business.geometry.location,
                         icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                    });
+
+                    // P5285
+                    const infoWindow = new google.maps.InfoWindow({
+                        content: `<div><strong>${business.name}</strong><br>${business.vicinity}</div>`
+                    });
+
+                    marker.addListener('click', () => {
+                        infoWindow.open(this.map, marker);
                     });
                 });
             }
