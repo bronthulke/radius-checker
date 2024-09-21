@@ -91,6 +91,7 @@ export default class MapLib {
 
             this.focusMarker(point);
             this.drawSearchRadiusCircle(point);
+            this.fetchBusinesses(point);
         })
     }
     
@@ -125,5 +126,28 @@ export default class MapLib {
             radius: parseInt(document.getElementById("ddlRadius").value),
         };
         this.resultRadiusCircles.push(new google.maps.Circle(circleOptions));
+    }
+
+    fetchBusinesses(point) {
+        const service = new google.maps.places.PlacesService(this.map);
+        const radius = parseInt(document.getElementById("ddlRadius").value);
+        const request = {
+            location: point,
+            radius: radius,
+            type: ['store', 'restaurant']
+        };
+
+        service.nearbySearch(request, (results, status) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                results.forEach(business => {
+                    new google.maps.Marker({
+                        map: this.map,
+                        title: business.name,
+                        position: business.geometry.location,
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                    });
+                });
+            }
+        });
     }
 }
