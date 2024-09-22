@@ -69,6 +69,11 @@ export default class MapLib {
             this.showBusinesses = event.target.checked;
             this.drawPointsAndRadii();
         });
+
+        // Close any open pop ups when clicking off it
+        google.maps.event.addListener(this.map, 'click', () => {
+            this.infoWindow.close();
+        });
     }
 
     addCurrentPointToMap() {
