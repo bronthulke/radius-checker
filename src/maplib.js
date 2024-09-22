@@ -164,7 +164,7 @@ export default class MapLib {
 
                     const photoUrl = business.photos && business.photos.length > 0 ? business.photos[0].getUrl() : '';
                     const rating = business.rating ? `Rating: ${business.rating} (${business.user_ratings_total} reviews)` : 'No rating available';
-                    const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${business.place_id}`;
+                    const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${business.geometry.location.lat()},${business.geometry.location.lng()}`;
 
                     const infoWindowContent = `
                         <div>
@@ -177,6 +177,7 @@ export default class MapLib {
                     `;
 
                     marker.addListener('click', () => {
+                        this.infoWindow.close();
                         this.infoWindow.setContent(infoWindowContent);
                         this.infoWindow.open(this.map, marker);
                     });
