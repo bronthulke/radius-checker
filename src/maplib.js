@@ -9,6 +9,7 @@ export default class MapLib {
         this.currentPoint = undefined;
         this.showBusinesses = true;
         this.businessMarkers = [];
+        this.infoWindow = new google.maps.InfoWindow();
 
         this.map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: -37.8136, lng: 144.9631 },
@@ -161,12 +162,23 @@ export default class MapLib {
                         icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
                     });
 
-                    const infoWindow = new google.maps.InfoWindow({
-                        content: `<div><strong>${business.name}</strong><br>${business.vicinity}</div>`
-                    });
+                    const photoUrl = business.photos && business.photos.length > 0 ? business.photos[0].getUrl() : '';
+                    const rating = business.rating ? `Rating: ${business.rating} (${business.user_ratings_total} reviews)` : 'No rating available';
+                    const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${business.place_id}`;
+
+                    const infoWindowContent = `
+                        <div>
+                            <strong>${business.name}</strong><br>
+                            ${business.vicinity}<br>
+                            ${photoUrl ? `<img src="${photoUrl}" alt="${business.name}" style="width:100px;height:auto;"><br>` : ''}
+                            ${rating}<br>
+                            <a href="${directionsUrl}" target="_blank">Get Directions</a>
+                        </div>
+                    `;
 
                     marker.addListener('click', () => {
-                        infoWindow.open(this.map, marker);
+                        this.infoWindow.setContent(infoWindowContent);
+                        this.infoWindow.open(this.map, marker);
                     });
 
                     this.businessMarkers.push(marker);
