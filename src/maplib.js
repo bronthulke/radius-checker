@@ -7,6 +7,8 @@ export default class MapLib {
         this.resultMarkers = [];
         this.points = [];
         this.currentPoint = undefined;
+        this.halfwayPoint1 = undefined;
+        this.halfwayPoint2 = undefined;
         this.showBusinesses = true;
         this.businessMarkers = [];
         this.infoWindow = new google.maps.InfoWindow();
@@ -24,6 +26,28 @@ export default class MapLib {
             })
             .bind("geocode:result", (event, result) => {
                 this.currentPoint = new google.maps.LatLng(
+                    result.geometry.location.lat(),
+                    result.geometry.location.lng()
+                );
+            });
+
+        $("#SearchAddress1")
+            .geocomplete({
+                country: 'AU'
+            })
+            .bind("geocode:result", (event, result) => {
+                this.halfwayPoint1 = new google.maps.LatLng(
+                    result.geometry.location.lat(),
+                    result.geometry.location.lng()
+                );
+            });
+
+        $("#SearchAddress2")
+            .geocomplete({
+                country: 'AU'
+            })
+            .bind("geocode:result", (event, result) => {
+                this.halfwayPoint2 = new google.maps.LatLng(
                     result.geometry.location.lat(),
                     result.geometry.location.lng()
                 );
@@ -68,6 +92,10 @@ export default class MapLib {
         $("#toggleBusinesses").on("change", (event) => {
             this.showBusinesses = event.target.checked;
             this.drawPointsAndRadii();
+        });
+
+        $("#btnFindHalfwayPoint").on("click", () => {
+            this.findHalfwayPoint();
         });
 
         // Close any open pop ups when clicking off it
@@ -132,7 +160,7 @@ export default class MapLib {
         }
     }
 
-    drawSearchRadiusCircle(point) {
+    drawSearchRadiusCircle(point, radius) {
         const circleOptions = {
             strokeColor: "#bb2865",
             strokeOpacity: 0.3,
@@ -143,17 +171,17 @@ export default class MapLib {
             center: point,
             clickable: false,
             zInd: -1,
-            radius: parseInt(document.getElementById("ddlRadius").value),
+            radius: radius !== undefined ? radius : parseInt(document.getElementById("ddlRadius").value),
         };
         this.resultRadiusCircles.push(new google.maps.Circle(circleOptions));
     }
 
-    fetchBusinesses(point) {
+    fetchBusinesses(point, radius) {
         const service = new google.maps.places.PlacesService(this.map);
-        const radius = parseInt(document.getElementById("ddlRadius").value);
+        const searchRadius = radius !== undefined ? radius : parseInt(document.getElementById("ddlRadius").value);
         const request = {
             location: point,
-            radius: radius,
+            radius: searchRadius,
             type: ['store', 'restaurant']
         };
 
@@ -191,5 +219,93 @@ export default class MapLib {
                 });
             }
         });
+    }
+
+    getLat(point) {
+        return typeof point.lat === 'function' ? point.lat() : point.lat;
+    }
+
+    getLng(point) {
+        return typeof point.lng === 'function' ? point.lng() : point.lng;
+    }
+
+    calculateDistance(point1, point2) {
+        const R = 6371000; // Earth radius in metres
+        const lat1 = this.getLat(point1) * Math.PI / 180;
+        const lat2 = this.getLat(point2) * Math.PI / 180;
+        const dLat = (this.getLat(point2) - this.getLat(point1)) * Math.PI / 180;
+        const dLng = (this.getLng(point2) - this.getLng(point1)) * Math.PI / 180;
+
+        const a = Math.sin(dLat / 2) ** 2 +
+                  Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c; // metres
+    }
+
+    calculateMidpoint(point1, point2) {
+        const lat1 = this.getLat(point1) * Math.PI / 180;
+        const lat2 = this.getLat(point2) * Math.PI / 180;
+        const lng1 = this.getLng(point1) * Math.PI / 180;
+        const dLng = (this.getLng(point2) - this.getLng(point1)) * Math.PI / 180;
+
+        const bx = Math.cos(lat2) * Math.cos(dLng);
+        const by = Math.cos(lat2) * Math.sin(dLng);
+
+        const midLat = Math.atan2(
+            Math.sin(lat1) + Math.sin(lat2),
+            Math.sqrt((Math.cos(lat1) + bx) ** 2 + by ** 2)
+        ) * 180 / Math.PI;
+
+        const midLng = (lng1 + Math.atan2(by, Math.cos(lat1) + bx)) * 180 / Math.PI;
+
+        return new google.maps.LatLng(midLat, midLng);
+    }
+
+    findHalfwayPoint() {
+        if (!this.halfwayPoint1 || !this.halfwayPoint2) {
+            alert('Please enter both locations to find the halfway point.');
+            return;
+        }
+
+        const distance = this.calculateDistance(this.halfwayPoint1, this.halfwayPoint2);
+        const radius = Math.round(distance / 2) + 5000; // half distance + 5km overlap
+        const midpoint = this.calculateMidpoint(this.halfwayPoint1, this.halfwayPoint2);
+
+        this.clearPreviousRadius();
+
+        this.resultMarkers.push(new google.maps.Marker({
+            map: this.map,
+            title: 'Halfway point',
+            position: midpoint,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+        }));
+
+        this.resultMarkers.push(new google.maps.Marker({
+            map: this.map,
+            title: 'Location 1',
+            position: this.halfwayPoint1,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+        }));
+
+        this.resultMarkers.push(new google.maps.Marker({
+            map: this.map,
+            title: 'Location 2',
+            position: this.halfwayPoint2,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+        }));
+
+        this.focusMarker(midpoint);
+        this.drawSearchRadiusCircle(midpoint, radius);
+
+        if (this.showBusinesses) {
+            this.fetchBusinesses(midpoint, radius);
+        }
+
+        const distanceKm = (distance / 1000).toFixed(1);
+        const radiusKm = (radius / 1000).toFixed(1);
+        document.getElementById('halfwayResultText').textContent =
+            `Distance between locations: ${distanceKm}km. Calculated meeting radius: ${radiusKm}km (half the distance + 5km overlap).`;
+        document.getElementById('halfwayResult').style.display = '';
     }
 }

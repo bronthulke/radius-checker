@@ -46,6 +46,31 @@
                 &nbsp;&nbsp;<input type="button" class="btn btn-danger" id="btnClearMap" value="Clear map" />
             </div>
         </div>
+
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <h4>Find Halfway Point</h4>
+                <p>Enter two locations to find the halfway point between them and calculate the meeting radius (half the distance + 5km overlap).</p>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <label class="control-label">Location 1</label>
+                <input type="text" id="SearchAddress1" class="form-control" />
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <label class="control-label">Location 2</label>
+                <input type="text" id="SearchAddress2" class="form-control" />
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <label class="control-label">&nbsp;</label>
+                <br />
+                <input type="button" class="btn btn-info" id="btnFindHalfwayPoint" value="Find halfway point" />
+            </div>
+        </div>
+        <div class="row" id="halfwayResult" style="display:none;">
+            <div class="col-xs-12">
+                <div class="alert alert-info" id="halfwayResultText"></div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-xs-12 form-group">
                 <a href="javascript:;" class="btn btn-success hidden" id="btnSetAsFavourite">Set last point as favourite</a>
