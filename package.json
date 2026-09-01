@@ -14,22 +14,22 @@
   "author": "Bron Thulke",
   "license": "MIT",
   "dependencies": {
-    "@googlemaps/google-maps-services-js": "^3.4.0",
-    "bootstrap": "^3.4.1",
-    "copy-webpack-plugin": "^6.0.3",
-    "jquery": "^3.5.1"
+    "@googlemaps/google-maps-services-js": "^3.4.2",
+    "bootstrap": "^5.3.8",
+    "copy-webpack-plugin": "^14.0.0",
+    "jquery": "^3.7.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.15.7",
-    "@babel/core": "^7.11.0",
-    "@babel/preset-env": "^7.11.0",
+    "@babel/cli": "^7.29.7",
+    "@babel/core": "^7.29.7",
+    "@babel/preset-env": "^7.29.7",
     "css-loader": "^7.1.2",
     "dotenv-webpack": "^8.1.0",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^5.6.0",
     "style-loader": "^1.2.1",
-    "webpack": "^5.92.1",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.4"
+    "webpack": "^5.110.2",
+    "webpack-cli": "^7.2.3",
+    "webpack-dev-server": "^6.0.0"
   }
 }
