@@ -269,7 +269,7 @@ export default class MapLib {
         }
 
         const distance = this.calculateDistance(this.halfwayPoint1, this.halfwayPoint2);
-        const radius = Math.round(distance / 2) + 5000; // half distance + 5km overlap
+        const radius = 5000; // fixed 5km radius from midpoint
         const midpoint = this.calculateMidpoint(this.halfwayPoint1, this.halfwayPoint2);
 
         this.clearPreviousRadius();
@@ -305,7 +305,7 @@ export default class MapLib {
         const distanceKm = (distance / 1000).toFixed(1);
         const radiusKm = (radius / 1000).toFixed(1);
         document.getElementById('halfwayResultText').textContent =
-            `Distance between locations: ${distanceKm}km. Calculated meeting radius: ${radiusKm}km (half the distance + 5km overlap).`;
+            `Distance between locations: ${distanceKm}km. Meeting radius: ${radiusKm}km from the halfway point.`;
         document.getElementById('halfwayResult').style.display = '';
     }
 }
